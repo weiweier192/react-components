@@ -1,0 +1,64 @@
+.btn {
+    position: relative;
+    display: inline-block;
+    font-weight: $btn-font-weight;
+    line-height: $btn-line-height;
+    color: $body-color;
+    white-space: nowrap;
+    text-align: center;
+    vertical-align: middle;
+    background-image: none;
+    border: $btn-border-width solid transparent;
+    @include btn-size($btn-padding-y, $btn-padding-x, $btn-font-size, $border-radius);
+    box-shadow: $btn-box-shadow;
+    cursor: pointer;
+    transition: $btn-transition;
+    &.disabled,
+    &[disabled] {
+        cursor: not-allowed;
+        opacity: $btn-disabled-opacity;
+        box-shadow: none;
+        > * {
+            // 让鼠标事件失效（链接、点击等事件）
+            pointer-events: none;
+        }
+    }
+}
+// size
+.btn-lg {
+    @include btn-size($btn-padding-y-lg, $btn-padding-x-lg, $btn-font-size-lg, $btn-border-radius-lg);
+}
+.btn-sm {
+    @include btn-size($btn-padding-y-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-border-radius-sm);
+}
+// type
+.btn-primary {
+    @include btn-style($primary, $primary, $white);
+}
+.btn-danger {
+    @include btn-style($danger, $danger, $white)
+}
+.btn-default {
+    @include btn-style($white, $gray-400, $body-color, $white, $primary, $primary);
+}
+.btn-link {
+    font-weight: $font-weight-normal;
+    color: $btn-link-color;
+    // 添加到文本的修饰，下划线、上划线、删除线等
+    text-decoration: $link-decoration;
+    box-shadow: none;
+    &:hover {
+        color: $btn-link-hover-color;
+        text-decoration: $link-hover-decoration;
+    }
+    &:focus,
+    &.focus {
+        text-decoration: $link-hover-decoration;
+        box-shadow: none;
+    }
+    &:disabled,
+    &.disabled {
+        color: $btn-link-disabled-color;
+        pointer-events: none;
+    }
+}
