@@ -38,3 +38,14 @@
         border-color: $border;
     }
 }
+
+// alert
+@mixin alt-size() {
+
+}
+@mixin alt-color($background) {
+    background-color: $background;
+    &:hover {
+        border-color: lighten($background, 26%);
+    }
+}
