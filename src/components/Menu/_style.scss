@@ -38,6 +38,7 @@
     }
   }
   .submenu-content {
+    display: none;
     list-style: none;
     padding-left: 0;
     white-space: nowrap;
@@ -54,6 +55,9 @@
         color: lighten($menu-item-active-color, 20%) !important;
       }
     }
+  }
+  .submenu-content.submenu-open {
+    display: block;
   }
 }
 

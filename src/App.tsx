@@ -18,6 +18,7 @@ const App: React.FC = () => {
       <Menu
         mode="vertical"
         defaultIndex={'0'}
+        defaultOpenSubMenus={['2']}
         onSelect={(index) => {
           alert(`当前${index}`)
         }}>

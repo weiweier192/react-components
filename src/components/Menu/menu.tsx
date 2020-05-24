@@ -9,16 +9,20 @@ interface IMenuProps {
   defaultIndex?: '0'
   onSelect?: onSelectType
   className?: string
+  defaultOpenSubMenus?: string[]
+  style?: React.CSSProperties // 内置的css样式
 }
 interface IMenuContext {
   index: string
+  mode?: modeType
   onSelect?: onSelectType
+  defaultOpenSubMenus?: string[]
 }
 // 通过context给children传递参数
 export const MenuContext = createContext<IMenuContext>({ index: '0' })
 
 const Menu: React.FC<IMenuProps> = (props) => {
-  const { children, mode, defaultIndex, className } = props
+  const { children, mode, defaultIndex, className, defaultOpenSubMenus, style } = props
   const { onSelect } = props
   let index = defaultIndex ? defaultIndex : '0'
   const [active, setActive] = useState<string>(index)
@@ -34,6 +38,8 @@ const Menu: React.FC<IMenuProps> = (props) => {
   const passedContext: IMenuContext = {
     index: active ? active : '0',
     onSelect: handleSelect,
+    mode: mode,
+    defaultOpenSubMenus
   }
 
   // 1. 解决menu组件中子组件必须都是menuItem组件: React.Children.map()
@@ -55,7 +61,7 @@ const Menu: React.FC<IMenuProps> = (props) => {
     })
   }
   return (
-    <ul className={classes}>
+    <ul className={classes} style={style}>
       <MenuContext.Provider value={passedContext}>
         {renderChildren()}
       </MenuContext.Provider>
@@ -65,6 +71,7 @@ const Menu: React.FC<IMenuProps> = (props) => {
 Menu.defaultProps = {
   defaultIndex: '0',
   mode: 'horizental',
+  defaultOpenSubMenus: []
 }
 
 export default Menu
