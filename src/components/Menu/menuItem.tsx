@@ -38,4 +38,5 @@ const MenuItem: React.FC<IMenuItemProps> = (props) => {
 MenuItem.defaultProps = {
   disabled: false,
 }
+MenuItem.displayName = 'MenuItem'
 export default MenuItem

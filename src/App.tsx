@@ -22,14 +22,14 @@ const App: React.FC = () => {
           alert(`当前${index}`)
         }}
       >
-        <MenuItem index='0'>1</MenuItem>
-        <MenuItem disabled index='1'>2</MenuItem>
+        <MenuItem >1</MenuItem>
+        <MenuItem disabled >2</MenuItem>
         {/* <SubMenu title="test">
           <MenuItem>test1</MenuItem>
           <MenuItem>test2</MenuItem>
           <MenuItem>test3</MenuItem>
         </SubMenu> */}
-        <MenuItem index='2'>3</MenuItem>
+        <MenuItem >3</MenuItem>
       </Menu> 
       <Alert
         ref={alertRef}

@@ -1,5 +1,6 @@
 import React, { useState, createContext } from 'react'
 import classNames from 'classnames'
+import { IMenuItemProps } from '../Menu copy/menuItem'
 
 type modeType = 'horizental' | 'vertical'
 type onSelectType = (index: string) => void
@@ -33,9 +34,22 @@ const Menu: React.FC<IMenuProps> = (props) => {
     index: active ? active : '0',
     onSelect: handleSelect,
   }
+
+  // 1. 解决menu组件中子组件必须都是menuItem组件: React.Children.map()
+  // 2. 给组件添加属性: React.cloneElement()
+  const renderChildren = () => {
+    return React.Children.map(children, (child, index) => {
+      // 使用断言转成FCE实例
+      const childElement = child as React.FunctionComponentElement<IMenuItemProps>
+      const {displayName} = childElement.type
+      if(displayName === 'MenuItem') {
+        return React.cloneElement(childElement, {index: index.toString()})
+      }
+    })
+  }
   return (
     <ul className={classes}>
-      <MenuContext.Provider value={passedContext}>{children}</MenuContext.Provider>
+      <MenuContext.Provider value={passedContext}>{renderChildren()}</MenuContext.Provider>
     </ul>
   )
 }
