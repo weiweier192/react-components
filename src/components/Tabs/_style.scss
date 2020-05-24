@@ -1,0 +1,26 @@
+.tabs {
+  width: 100%;
+  //   display: flex;
+  position: relative;
+  &:after {
+    content: ' ';
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+  }
+  .tab-item {
+    float: left;
+    height: 100%;
+    .tabitem-title {
+      float: left;
+    }
+    .tabitem-content {
+      float: left;
+      width: 100%;
+    }
+    .tabitem-content.tabitem-content-none {
+      display: none;
+    }
+  }
+}

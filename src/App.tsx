@@ -4,6 +4,8 @@ import Alert, { AlertType } from './components/Alert/alert'
 import Menu from './components/Menu/menu'
 import MenuItem from './components/Menu/menuItem'
 import SubMenu from './components/Menu/subMenu'
+import Tabs from './components/Tabs/tabs'
+import TabItem from './components/Tabs/tabItem'
 
 const App: React.FC = () => {
   const alertRef = useRef<any>()
@@ -15,27 +17,24 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <Menu
-        mode="vertical"
-        defaultIndex={'0'}
-        defaultOpenSubMenus={['2']}
+      <Tabs
+        defaultIndex={0}
         onSelect={(index) => {
-          alert(`当前${index}`)
-        }}>
-        <MenuItem>1</MenuItem>
-        <MenuItem disabled>2</MenuItem>
-        <SubMenu title="test">
-          <MenuItem>test1</MenuItem>
-          <MenuItem>test2</MenuItem>
-          <MenuItem>test3</MenuItem>
-        </SubMenu>
-        <MenuItem>3</MenuItem>
-      </Menu>
+          alert(index)
+        }}
+        type="line"
+      >
+        <TabItem index={0} label="选项一">选项一44444444444444444444444</TabItem>
+        <TabItem index={1} label="选项二">选项二555555555555555555555555</TabItem>
+        <TabItem index={2} label="选项三">选项三</TabItem>
+      </Tabs>
+      {/* <br /><br /> */}
       <Menu
         defaultIndex={'0'}
         onSelect={(index) => {
           alert(`当前${index}`)
-        }}>
+        }}
+      >
         <MenuItem>1</MenuItem>
         <MenuItem disabled>2</MenuItem>
         <SubMenu title="test">
