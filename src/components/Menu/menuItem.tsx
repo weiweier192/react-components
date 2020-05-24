@@ -2,7 +2,7 @@ import React, { useCallback, useContext } from 'react'
 import classNames from 'classnames'
 import { MenuContext } from './menu'
 
-interface IMenuItemProps {
+export interface IMenuItemProps {
   index?: string
   disabled?: boolean
   className?: string

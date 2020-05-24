@@ -3,7 +3,7 @@ import Button, { ButtonType, ButtonSize } from './components/Button/button'
 import Alert, { AlertType } from './components/Alert/alert'
 import Menu from './components/Menu/menu'
 import MenuItem from './components/Menu/menuItem'
-// import SubMenu from './components/Menu/subMenu'
+import SubMenu from './components/Menu/subMenu'
 
 const App: React.FC = () => {
   const alertRef = useRef<any>()
@@ -15,22 +15,35 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-       <Menu
-        // mode="vertical"
+      <Menu
+        mode="vertical"
         defaultIndex={'0'}
         onSelect={(index) => {
           alert(`当前${index}`)
-        }}
-      >
-        <MenuItem >1</MenuItem>
-        <MenuItem disabled >2</MenuItem>
-        {/* <SubMenu title="test">
+        }}>
+        <MenuItem>1</MenuItem>
+        <MenuItem disabled>2</MenuItem>
+        <SubMenu title="test">
           <MenuItem>test1</MenuItem>
           <MenuItem>test2</MenuItem>
           <MenuItem>test3</MenuItem>
-        </SubMenu> */}
-        <MenuItem >3</MenuItem>
-      </Menu> 
+        </SubMenu>
+        <MenuItem>3</MenuItem>
+      </Menu>
+      <Menu
+        defaultIndex={'0'}
+        onSelect={(index) => {
+          alert(`当前${index}`)
+        }}>
+        <MenuItem>1</MenuItem>
+        <MenuItem disabled>2</MenuItem>
+        <SubMenu title="test">
+          <MenuItem>test1</MenuItem>
+          <MenuItem>test2</MenuItem>
+          <MenuItem>test3</MenuItem>
+        </SubMenu>
+        <MenuItem>3</MenuItem>
+      </Menu>
       <Alert
         ref={alertRef}
         closable
@@ -70,7 +83,6 @@ const App: React.FC = () => {
       <Button disabled btnType={ButtonType.Link} href={'http://www.baidu.com'}>
         Hell0
       </Button>
-      
     </div>
   )
 }

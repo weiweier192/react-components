@@ -1,6 +1,6 @@
 import React, { useState, createContext } from 'react'
 import classNames from 'classnames'
-import { IMenuItemProps } from '../Menu copy/menuItem'
+import { IMenuItemProps } from './menuItem'
 
 type modeType = 'horizental' | 'vertical'
 type onSelectType = (index: string) => void
@@ -25,6 +25,7 @@ const Menu: React.FC<IMenuProps> = (props) => {
 
   const classes = classNames('menu', className, {
     'menu-vertical': mode === 'vertical',
+    'menu-horizental': mode !== 'vertical'
   })
   const handleSelect = (index: string) => {
     setActive(index)
@@ -39,17 +40,25 @@ const Menu: React.FC<IMenuProps> = (props) => {
   // 2. 给组件添加属性: React.cloneElement()
   const renderChildren = () => {
     return React.Children.map(children, (child, index) => {
-      // 使用断言转成FCE实例
-      const childElement = child as React.FunctionComponentElement<IMenuItemProps>
-      const {displayName} = childElement.type
-      if(displayName === 'MenuItem') {
-        return React.cloneElement(childElement, {index: index.toString()})
+      // 使用断言将child转成FCE实例,为其添加属性
+      const childElement = child as React.FunctionComponentElement<
+        IMenuItemProps
+      >
+      const { displayName } = childElement.type
+      if (displayName === 'MenuItem' || displayName === 'SubMenu') {
+        return React.cloneElement(childElement, { index: index.toString() })
+      }else {
+        console.error(
+          "Warning: Menu has a child which is not a 'MenuItem' component"
+        )
       }
     })
   }
   return (
     <ul className={classes}>
-      <MenuContext.Provider value={passedContext}>{renderChildren()}</MenuContext.Provider>
+      <MenuContext.Provider value={passedContext}>
+        {renderChildren()}
+      </MenuContext.Provider>
     </ul>
   )
 }
