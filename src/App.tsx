@@ -1,6 +1,9 @@
 import React, { useState, useRef } from 'react'
 import Button, { ButtonType, ButtonSize } from './components/Button/button'
 import Alert, { AlertType } from './components/Alert/alert'
+import Menu from './components/Menu/menu'
+import MenuItem from './components/Menu/menuItem'
+// import SubMenu from './components/Menu/subMenu'
 
 const App: React.FC = () => {
   const alertRef = useRef<any>()
@@ -12,6 +15,22 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
+       <Menu
+        // mode="vertical"
+        defaultIndex={'0'}
+        onSelect={(index) => {
+          alert(`当前${index}`)
+        }}
+      >
+        <MenuItem index='0'>1</MenuItem>
+        <MenuItem disabled index='1'>2</MenuItem>
+        {/* <SubMenu title="test">
+          <MenuItem>test1</MenuItem>
+          <MenuItem>test2</MenuItem>
+          <MenuItem>test3</MenuItem>
+        </SubMenu> */}
+        <MenuItem index='2'>3</MenuItem>
+      </Menu> 
       <Alert
         ref={alertRef}
         closable
@@ -24,14 +43,6 @@ const App: React.FC = () => {
         title="alert"
         description="first: danger"
       />
-      {/* <Alert type={AlertType.success} title="alert" description="first: alert45131313435131313513131313"/> */}
-      {/* <Alert
-          ref={alertRef}
-          duration={2}
-          description="first: alert451313134331313513131313"
-        /> */}
-      {/* <Alert type={AlertType.warning} title="alert" description="first: alert45131313435131313513131313"/> */}
-
       <Button
         className="default"
         onClick={() => {
@@ -56,18 +67,10 @@ const App: React.FC = () => {
       >
         Small
       </Button>
-      <Button btnType={ButtonType.Primary} size={ButtonSize.Large}>
-        Large
-      </Button>
-      <Button btnType={ButtonType.Danger} size={ButtonSize.Large}>
-        Large
-      </Button>
       <Button disabled btnType={ButtonType.Link} href={'http://www.baidu.com'}>
         Hell0
       </Button>
-      <Button btnType={ButtonType.Link} href={'http://www.baidu.com'}>
-        Hell0
-      </Button>
+      
     </div>
   )
 }

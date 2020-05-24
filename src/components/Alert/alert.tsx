@@ -22,7 +22,7 @@ interface IAlertProps {
 
 const Alert: React.FC<IAlertProps> = forwardRef((props, ref) => {
   const [isShow, setIsShow] = useState<boolean>(false)
-  
+
   const { title, description, type, className, closable, duration } = props
 
   const classes = classNames('alt', className, {
@@ -34,14 +34,18 @@ const Alert: React.FC<IAlertProps> = forwardRef((props, ref) => {
       setIsShow(true)
     },
     close() {
-        setIsShow(false)
-    }
+      setIsShow(false)
+    },
   }))
 
-  const time: number = typeof duration === 'number' ? duration : 2
+  const time: number = typeof duration === 'number' ? duration : 3
+  let timeId = null
 
   if (!closable) {
-    setTimeout(() => {
+    if (timeId) {
+      clearTimeout(timeId)
+    }
+    timeId = setTimeout(() => {
       setIsShow(false)
     }, time * 1000)
   }
@@ -73,7 +77,7 @@ const Alert: React.FC<IAlertProps> = forwardRef((props, ref) => {
 })
 Alert.defaultProps = {
   type: AlertType.default,
-  duration: 2,
+  duration: 3,
   closable: false,
 }
 export default Alert
