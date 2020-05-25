@@ -1,7 +1,10 @@
 import React, { useState, useContext } from 'react'
 import classNames from 'classnames'
+import { CSSTransition } from 'react-transition-group'
 import { MenuContext } from './menu'
 import { IMenuItemProps } from './menuItem'
+import Icon from '../Icon/icon'
+import Transition from '../Transition/transition'
 
 interface ISubMenu {
   title: string
@@ -15,11 +18,17 @@ const SubMenu: React.FC<ISubMenu> = (props) => {
   const context = useContext(MenuContext)
 
   const openedSubMens = context.defaultOpenSubMenus as string[]
-  const isOpened = (index && context.mode === 'vertical') && openedSubMens.includes(index)
-  const [submenuOpened, setSubmenuOpened] = useState(isOpened)
+  // const isOpened = (index && context.mode === 'vertical') && openedSubMens.includes(index) && false
+  const isOpened =
+    index && context.mode === 'vertical' && openedSubMens.includes(index)
+      ? true
+      : false
+  const [submenuOpened, setSubmenuOpened] = useState<boolean>(isOpened)
 
   const classes = classNames('menu-item', 'sub-menu', className, {
     'is-active': context.index === index,
+    'is-opened': submenuOpened,
+    'is-vertical': context.mode === 'vertical',
   })
 
   const handleSelect = (e: React.MouseEvent) => {
@@ -71,12 +80,25 @@ const SubMenu: React.FC<ISubMenu> = (props) => {
         )
       }
     })
-    return <ul className={subClasses}>{childrenComponent}</ul>
+    return (
+      <Transition in={submenuOpened} timeout={300} animation="zoom-in-top">
+        <ul className={subClasses}>{childrenComponent}</ul>
+      </Transition>
+      // <CSSTransition
+      //   in={submenuOpened}
+      //   timeout={300}
+      //   classNames="zoom-in-top"
+      //   appear
+      //   unmountOnExit
+      // >
+      // </CSSTransition>
+    )
   }
   return (
     <li className={classes} key={index} {...hoverEvents}>
       <div className="submenu-title" {...handleClick}>
         {title}
+        <Icon icon="angle-down" className="icon-arrow" />
       </div>
       {renderChildren()}
     </li>

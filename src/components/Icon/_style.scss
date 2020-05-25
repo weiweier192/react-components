@@ -1,0 +1,7 @@
+// @each 循环
+@each $key, $value in $theme-colors {
+  // 类名 {属性}
+  .icon-#{$key} {
+    color: $value;
+  }
+}
