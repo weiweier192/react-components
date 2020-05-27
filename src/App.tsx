@@ -12,6 +12,7 @@ import Tabs from './components/Tabs/tabs'
 import TabItem from './components/Tabs/tabItem'
 import Icon from './components/Icon/icon'
 import Transition from './components/Transition/transition'
+import Input from './components/Input/input'
 
 library.add(fas) // 拿到了所有的图标
 // import { faCoffee } from '@fortawesome/free-solid-svg-icons'
@@ -27,6 +28,13 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
+      <Input prepend="https://" append=".com" onChange={(e) => console.log('onChange', e.target.value)} />
+      <Input prepend="https://" append=".com" disabled size="sm" />
+      <Input prepend="https://" append=".com" size="lg" />
+      <Input prepend="https://" icon="search" disabled />
+      <Input append=".com" placeholder="请输入内容" />
+      <Input prepend="https://" size="sm" />
+      <Input append=".com" size="lg" />
       <Transition in={isShow} timeout={300} animation="zoom-in-left">
         <div>
           <Icon icon="arrow-down" theme="primary" size="sm" />
