@@ -9,6 +9,7 @@ import classNames from 'classnames'
 import Input, { InputProps } from '../Input/input'
 import Icon from '../Icon/icon'
 import useDebounce from '../../hooks/useDebounce'
+import useClickOutside from '../../hooks/useClickOutside'
 
 interface DataSourceObject {
   value: string
@@ -39,8 +40,11 @@ export const AutoComplete: React.FC<AutoComplete> = (props) => {
   const [suggestions, setSuggestions] = useState<DataSourceType[]>([])
   const [highlightIndex, setHighlightIndex] = useState(-1)
   const updateRef = useRef(false)
+  const componentRef = useRef<HTMLDivElement>(null)
   // debounce
   const debouncedValue = useDebounce(inputVale, 500)
+  // 点击此组件外部，关闭下拉框
+  useClickOutside(componentRef, () => {setSuggestions([])})
   //   console.log(inputVale, suggestions)
   const classes = classNames('auto-complete', className, {})
   useEffect(() => {
@@ -145,7 +149,7 @@ export const AutoComplete: React.FC<AutoComplete> = (props) => {
     )
   }
   return (
-    <div className="auto-complete-wrapper">
+    <div className="auto-complete-wrapper" ref={componentRef}>
       <Input
         value={inputVale}
         {...restProps}
