@@ -16,6 +16,8 @@ import Input from './components/Input/input'
 import AutoComplete, {
   DataSourceType,
 } from './components/AutoComplete/autoComplete'
+import Upload, { UploadFile } from './components/Upload/upload'
+import axios from 'axios'
 
 // import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 interface LakerProps {
@@ -40,6 +42,29 @@ const App: React.FC = () => {
     { value: 'hook', number: 3 },
     { value: 'footer', number: 4 },
     { value: 'oo', number: 5 },
+  ]
+  const defaultFileList: UploadFile[] = [
+    {
+      fid: '123' + 'upload-file',
+      status: 'uploading',
+      name: 'name_file1',
+      size: 123,
+      percent: 100,
+    },
+    {
+      fid: '456' + 'upload-file',
+      status: 'error',
+      name: 'name_file2',
+      size: 123,
+      percent: 10,
+    },
+    {
+      fid: '789' + 'upload-file',
+      status: 'success',
+      name: 'name_file3',
+      size: 123,
+      percent: 60,
+    },
   ]
 
   const handleShowAlert = (ref: any) => {
@@ -72,8 +97,79 @@ const App: React.FC = () => {
           .map((item: any) => ({ value: item.login, ...item }))
       })
   }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files // array-like
+    if (files) {
+      const uploadFile = files[0] // 获取第一个需要上传的文件
+      const formData = new FormData() // 创建实例，管理表单数据
+      // 添加需要上传的文件 name，file
+      formData.append(uploadFile.name, uploadFile)
+      axios({
+        url: 'https://jsonplaceholder.typicode.com/posts',
+        method: 'post',
+        data: formData,
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((rej) => {
+          console.log(rej)
+        })
+      // axios
+      //   .post('https://jsonplaceholder.typicode.com/posts', formData, {
+      //     headers: { 'Content-Type': 'multipart/form-data' },
+      //   })
+      //   .then((res) => {
+      //     console.log(res)
+      //   })
+      //   .catch((rej) => {
+      //     console.log(rej)
+      //   })
+    }
+  }
+  const handleOnProgress = (per: number, file: File) => {
+    console.log(per)
+  }
+  const handleOnSuccess = (data: any, file: File) => {
+    console.log(data)
+  }
+  const handleOnError = (err: any, file: File) => {
+    console.log(err)
+  }
+  const handleUploadChange = (state: boolean, file: File) => {
+    console.log(state)
+  }
+  const handleCheckFile = (file: File) => {
+    // file.size/1024单位为kb
+    if (Math.round(file.size / 1024) > 50) {
+      alert('file too large')
+      return false
+    }
+    return true
+  }
+  const newFilePromise = (file: File) => {
+    // File 实例化一个file对象 arr,filename, {config}
+    const newFile = new File([file], 'new_name.docx', { type: file.type })
+    return Promise.resolve(newFile)
+  }
   return (
     <div className="App">
+      <Upload
+        action="https://jsonplaceholder.typicode.com/posts"
+        // onProgress={handleOnProgress}
+        // onSuccess={handleOnSuccess}
+        // onError={handleOnError}
+        onChange={handleUploadChange}
+        defaultFileList={defaultFileList}
+        // beforeUpload={newFilePromise}
+      />
+      <div>
+        upload
+        <input type="file" name="myFile" onChange={handleChange} />
+      </div>
+      <br />
+      <br />
       <AutoComplete
         fetchSuggestion={handleFetch}
         onSelect={handleSelect}
