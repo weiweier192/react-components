@@ -1,0 +1,23 @@
+.progress-wrapper {
+  //   position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: $gray-400;
+  border-radius: 0.2rem;
+  .progress {
+    position: relative;
+    width: 100%;
+  }
+  .progress-inner {
+    position: absolute;
+    border-radius: 0.2rem;
+    // text-align: right;
+    text-align: center;
+    color: $white;
+    background-color: $primary;
+  }
+  .progress-wrapper {
+    vertical-align: middle;
+    font-size: 14px;
+  }
+}

@@ -49,7 +49,7 @@ const App: React.FC = () => {
       status: 'uploading',
       name: 'name_file1',
       size: 123,
-      percent: 100,
+      percent: 80,
     },
     {
       fid: '456' + 'upload-file',
@@ -63,7 +63,7 @@ const App: React.FC = () => {
       status: 'success',
       name: 'name_file3',
       size: 123,
-      percent: 60,
+      percent: 100,
     },
   ]
 
