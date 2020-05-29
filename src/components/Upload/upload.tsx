@@ -24,6 +24,12 @@ export interface IUploadProps {
   beforeUpload?: (file: File) => boolean | Promise<File>
   onChange?: (state: boolean, file: File) => void
   onRemove?: (file: UploadFile) => void
+  headers?: { [key: string]: any }
+  data?: { [key: string]: any }
+  name?: string
+  withCredentials?: boolean
+  accept?: string
+  multiple?: boolean
 }
 
 const Upload: React.FC<IUploadProps> = (props) => {
@@ -36,6 +42,12 @@ const Upload: React.FC<IUploadProps> = (props) => {
     beforeUpload,
     onChange,
     onRemove,
+    headers,
+    data,
+    name,
+    withCredentials,
+    accept,
+    multiple
   } = props
   const [fileList, setFileList] = useState<UploadFile[]>(defaultFileList || [])
   const inputFileRef = useRef<HTMLInputElement>(null)
@@ -98,18 +110,28 @@ const Upload: React.FC<IUploadProps> = (props) => {
       percent: 0,
       raw: file,
     }
-    setFileList([_file, ...fileList])
+    // setFileList([_file, ...fileList])
+    // 解决multible时的bug,异步
+    setFileList(prevList => {
+      return [_file, ...prevList]
+    })
     const formData = new FormData()
-    formData.append(file.name, file)
+    formData.append(name || 'file', file)
+    if(data) {
+      Object.keys(data).forEach(key => {
+        formData.append(key, data[key])
+      })
+    }
     axios({
       method: 'POST',
       url: action,
       data: formData,
       headers: {
+        ...headers,
         'Content-Type': 'multipart/form-data',
         'Access-Control-Allow-Origin': '*',
       },
-      withCredentials: true,
+      withCredentials,
       onUploadProgress: (e) => {
         let percentage = Math.round((e.loaded * 100) / e.total) || 0
         if (percentage < 100) {
@@ -149,10 +171,10 @@ const Upload: React.FC<IUploadProps> = (props) => {
     // setFileList(newFileList)
     // 2.
     setFileList((prevList) => {
-        return prevList.filter(item => item.fid !== file.fid)
+      return prevList.filter((item) => item.fid !== file.fid)
     })
     // upload的onRemove
-    if(onRemove) onRemove(file)
+    if (onRemove) onRemove(file)
   }
   //   console.log(fileList)
   return (
@@ -165,10 +187,15 @@ const Upload: React.FC<IUploadProps> = (props) => {
         type="file"
         name="uploadfile"
         onChange={handleFileChange}
+        accept={accept}
+        multiple={multiple}
       />
       <UploadList fileList={fileList} onRemove={handleRemoveFile} />
     </div>
   )
+}
+Upload.defaultProps = {
+  name: 'file'
 }
 
 export default Upload

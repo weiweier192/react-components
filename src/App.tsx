@@ -163,6 +163,11 @@ const App: React.FC = () => {
         onChange={handleUploadChange}
         defaultFileList={defaultFileList}
         // beforeUpload={newFilePromise}
+        // name='uploadFile'
+        // data={{'key': 'upload'}}
+        // headers={{'X-Powered-By': 'Upload'}}
+        accept=".png"
+        multiple
       />
       <div>
         upload
