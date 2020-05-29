@@ -3,7 +3,7 @@ import React, { useState, useRef, ReactElement } from 'react'
 import { library } from '@fortawesome/fontawesome-svg-core'
 // fas 所有图标的集合
 import { fas } from '@fortawesome/free-solid-svg-icons'
-import Button, { ButtonType, ButtonSize } from './components/Button/button'
+import Button from './components/Button/button'
 import Alert, { AlertType } from './components/Alert/alert'
 import Menu from './components/Menu/menu'
 import MenuItem from './components/Menu/menuItem'
@@ -225,7 +225,7 @@ const App: React.FC = () => {
         </div>
       </Transition>
       <Transition in={isShow} timeout={300} animation="zoom-in-left" wrapper>
-        <Button size={ButtonSize.Large}>Transition</Button>
+        <Button size="lg">Transition</Button>
       </Transition>
       {/* <br /><br /> */}
       <Menu
@@ -265,12 +265,12 @@ const App: React.FC = () => {
         ShowAlert
       </Button>
       <Button disabled>disabled</Button>
-      <Button disabled btnType={ButtonType.Primary}>
+      <Button disabled btnType="primary">
         disabled
       </Button>
       <Button
-        btnType={ButtonType.Primary}
-        size={ButtonSize.Small}
+        btnType="primary"
+        size="sm"
         onClick={() => {
           setIsShow(!isShow)
         }}
@@ -278,15 +278,16 @@ const App: React.FC = () => {
         Small
       </Button>
       <Button
-        btnType={ButtonType.Danger}
-        size={ButtonSize.Small}
+        btnType="danger"
+        size="sm"
         onClick={() => {
           handleShowAlert(alertRefDanger)
         }}
       >
         Small
       </Button>
-      <Button disabled btnType={ButtonType.Link} href={'http://www.baidu.com'}>
+      <Button>First</Button>
+      <Button disabled btnType="link" href={'http://www.baidu.com'}>
         Hell0
       </Button>
     </div>
