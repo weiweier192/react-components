@@ -29,7 +29,7 @@ const UploadList: React.FC<UploadListProps> = (props) => {
               <Icon icon="times-circle" theme="danger" />
             )}
           </span>
-          <span className="file-action">
+          <span className="file-active">
             <Icon
               icon="times"
               onClick={() => {

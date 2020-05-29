@@ -1,0 +1,54 @@
+.upload-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-width: 200px;
+}
+.upload-list-item {
+  position: relative;
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 6px 0;
+  box-sizing: border-box;
+  border-radius: 4px;
+  min-width: 160px;
+  &:first-child {
+    margin-top: 8px;
+  }
+  .file-name {
+    margin-left: 0.4rem;
+    margin-right: 2rem;
+    svg {
+      margin-right: 0.4rem;
+      color: $gray-500;
+    }
+  }
+  .file-status {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 4px;
+  }
+  .file-active {
+    display: none;
+    position: absolute;
+    right: 6px;
+    top: 0;
+    cursor: pointer;
+  }
+  &:hover {
+    background-color: $gray-200;
+    .file-status {
+      display: none;
+    }
+    .file-active {
+      display: block;
+    }
+  }
+  @each $name, $color in $upload-colors {
+    .file-name-#{$name} {
+        color: $color;
+    }
+  }
+}
