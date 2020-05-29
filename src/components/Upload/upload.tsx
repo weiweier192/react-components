@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react'
 import classNames from 'classnames'
 import UploadList from './uploadList'
 import Button from '../Button/button'
+import Dragger from './dragger'
 import axios from 'axios'
 
 export type UploadFileStatus = 'ready' | 'uploading' | 'success' | 'error'
@@ -30,6 +31,7 @@ export interface IUploadProps {
   withCredentials?: boolean
   accept?: string
   multiple?: boolean
+  drag?: boolean
 }
 
 const Upload: React.FC<IUploadProps> = (props) => {
@@ -47,7 +49,9 @@ const Upload: React.FC<IUploadProps> = (props) => {
     name,
     withCredentials,
     accept,
-    multiple
+    multiple,
+    drag,
+    children,
   } = props
   const [fileList, setFileList] = useState<UploadFile[]>(defaultFileList || [])
   const inputFileRef = useRef<HTMLInputElement>(null)
@@ -112,13 +116,13 @@ const Upload: React.FC<IUploadProps> = (props) => {
     }
     // setFileList([_file, ...fileList])
     // 解决multible时的bug,异步
-    setFileList(prevList => {
+    setFileList((prevList) => {
       return [_file, ...prevList]
     })
     const formData = new FormData()
     formData.append(name || 'file', file)
-    if(data) {
-      Object.keys(data).forEach(key => {
+    if (data) {
+      Object.keys(data).forEach((key) => {
         formData.append(key, data[key])
       })
     }
@@ -179,23 +183,36 @@ const Upload: React.FC<IUploadProps> = (props) => {
   //   console.log(fileList)
   return (
     <div className="upload-component">
-      <Button onClick={handleClickUpload}>Upload File</Button>
-      <input
-        ref={inputFileRef}
-        className="upload-file"
-        style={{ display: 'none' }}
-        type="file"
-        name="uploadfile"
-        onChange={handleFileChange}
-        accept={accept}
-        multiple={multiple}
-      />
+      <div onClick={handleClickUpload} style={{ display: 'inline-block' }}>
+        {drag ? (
+          <Dragger
+            onFile={(files) => {
+              uploadFile(files)
+            }}
+          >
+            {children}
+          </Dragger>
+        ) : (
+          children
+        )}
+        {/* <Button >Upload File</Button> */}
+        <input
+          ref={inputFileRef}
+          className="upload-file"
+          style={{ display: 'none' }}
+          type="file"
+          name="uploadfile"
+          onChange={handleFileChange}
+          accept={accept}
+          multiple={multiple}
+        />
+      </div>
       <UploadList fileList={fileList} onRemove={handleRemoveFile} />
     </div>
   )
 }
 Upload.defaultProps = {
-  name: 'file'
+  name: 'file',
 }
 
 export default Upload

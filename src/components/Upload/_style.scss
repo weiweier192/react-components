@@ -4,6 +4,28 @@
   list-style: none;
 //   max-width: 260px;
 }
+.upload-dragger {
+    width: 360px;
+    height: 180px;
+    border-radius: 0.6rem;
+    border: 1px dashed $gray-300;
+    background-color: $gray-100;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(.55,0,.1,1);
+    svg {
+        margin-top: 34px;
+    }
+    &:hover {
+        border-color: $primary;
+    }
+    &.is-dragover {
+        // color: $white;
+        border: 2px dashed $primary;
+        background-color: lighten($primary, 40%);
+        // background-color: rgba($primary, .2);
+    }
+}
+
 .upload-list-item {
   position: relative;
   transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);

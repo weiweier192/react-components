@@ -166,9 +166,14 @@ const App: React.FC = () => {
         // name='uploadFile'
         // data={{'key': 'upload'}}
         // headers={{'X-Powered-By': 'Upload'}}
-        accept=".png"
+        // accept=".png"
         multiple
-      />
+        drag
+      >
+        <Icon icon="upload" size="5x" theme="primary" />
+        <br />
+        <p>Drag file over to upload</p>
+      </Upload>
       <div>
         upload
         <input type="file" name="myFile" onChange={handleChange} />
