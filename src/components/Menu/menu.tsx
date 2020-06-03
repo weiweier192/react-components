@@ -4,7 +4,7 @@ import { IMenuItemProps } from './menuItem'
 
 type modeType = 'horizental' | 'vertical'
 type onSelectType = (index: string) => void
-interface IMenuProps {
+export interface IMenuProps {
   mode?: modeType
   defaultIndex?: '0'
   onSelect?: onSelectType
@@ -61,7 +61,8 @@ const Menu: React.FC<IMenuProps> = (props) => {
     })
   }
   return (
-    <ul className={classes} style={style}>
+    // data-testid: 用于测试时获取Menu组件
+    <ul className={classes} style={style} data-testid="test-menu">
       <MenuContext.Provider value={passedContext}>
         {renderChildren()}
       </MenuContext.Provider>

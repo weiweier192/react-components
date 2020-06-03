@@ -18,6 +18,7 @@
 .env.test.local
 .env.production.local
 
+# * 匹配多个字符
 *.test.tsx
 
 npm-debug.log*

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import classNames from 'classnames'
-import { CSSTransition } from 'react-transition-group'
+// import { CSSTransition } from 'react-transition-group'
 import { MenuContext } from './menu'
 import { IMenuItemProps } from './menuItem'
 import Icon from '../Icon/icon'
@@ -44,7 +44,7 @@ const SubMenu: React.FC<ISubMenu> = (props) => {
     e.preventDefault()
     timer = setTimeout(() => {
       setSubmenuOpened(toggle)
-    })
+    }, 100)
   }
   const hoverEvents =
     context.mode !== 'vertical'
@@ -84,14 +84,6 @@ const SubMenu: React.FC<ISubMenu> = (props) => {
       <Transition in={submenuOpened} timeout={300} animation="zoom-in-top">
         <ul className={subClasses}>{childrenComponent}</ul>
       </Transition>
-      // <CSSTransition
-      //   in={submenuOpened}
-      //   timeout={300}
-      //   classNames="zoom-in-top"
-      //   appear
-      //   unmountOnExit
-      // >
-      // </CSSTransition>
     )
   }
   return (
